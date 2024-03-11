@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 
 /*
   * String type의 필드 하나만들 가지고 있지만 클래스로 상태를 만들어서 관리하는 이유.
@@ -31,12 +31,10 @@ class TodoSearchState extends Equatable {
   }
 }
 
-class TodoSearch with ChangeNotifier {
-  TodoSearchState _state = TodoSearchState.initial();
-  TodoSearchState get state => _state;
+class TodoSearch extends StateNotifier<TodoSearchState> {
+  TodoSearch() : super(TodoSearchState.initial());
 
   void setSearchTerm(String newSearchTerm) {
-    _state = _state.copyWith(searchTerm: newSearchTerm);
-    notifyListeners();
+    state = state.copyWith(searchTerm: newSearchTerm);
   }
 }

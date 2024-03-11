@@ -53,7 +53,7 @@ class SearchAndFilterTodo extends StatelessWidget {
   }
 
   Color textColor(BuildContext context, Filter filter) {
-    final currentFilter = context.watch<TodoFilter>().state.filter;
+    final currentFilter = context.watch<TodoFilterState>().filter;
     return currentFilter == filter ? Colors.blue : Colors.grey;
   }
 }

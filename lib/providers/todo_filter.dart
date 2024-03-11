@@ -1,39 +1,40 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 
 import 'package:todo_provider/models/todo_model.dart';
 
 class TodoFilterState extends Equatable {
-  final Filter filter;
+  final Filter _filter;
   TodoFilterState({
-    required this.filter,
-  });
+    required filter,
+  }) : _filter = filter;
 
   factory TodoFilterState.initial() {
     return TodoFilterState(filter: Filter.all);
   }
 
-  @override
-  List<Object> get props => [filter];
+  Filter get filter => _filter;
 
   @override
-  String toString() => 'TodoFilterState(filter: $filter)';
+  List<Object> get props => [_filter];
+
+  @override
+  String toString() => 'TodoFilterState(filter: $_filter)';
 
   TodoFilterState copyWith({
     Filter? filter,
   }) {
     return TodoFilterState(
-      filter: filter ?? this.filter,
+      filter: filter ?? this._filter,
     );
   }
 }
 
-class TodoFilter with ChangeNotifier {
-  TodoFilterState _state = TodoFilterState.initial();
-  TodoFilterState get state => _state;
+class TodoFilter extends StateNotifier<TodoFilterState> {
+  TodoFilter() : super(TodoFilterState.initial());
 
   void changeFilter(Filter newFilter) {
-    _state = _state.copyWith(filter: newFilter);
-    notifyListeners();
+    state = state.copyWith(filter: newFilter);
   }
 }
