@@ -6,7 +6,7 @@ import 'package:todo_provider/utils/debounce.dart';
 
 class SearchAndFilterTodo extends StatelessWidget {
   SearchAndFilterTodo({super.key});
-  final Debounce debounce = Debounce(milliseconds: 10000);
+  final Debounce debounce = Debounce(milliseconds: 1000);
 
   @override
   Widget build(BuildContext context) {

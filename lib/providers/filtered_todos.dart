@@ -1,6 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
-
 import 'package:todo_provider/models/todo_model.dart';
 import 'package:todo_provider/providers/todo_filter.dart';
 import 'package:todo_provider/providers/todo_list.dart';
@@ -31,22 +29,17 @@ class FilteredTodosState extends Equatable {
   }
 }
 
-class FilteredTodos with ChangeNotifier {
-  late FilteredTodosState _state;
-  final List<Todo> initialFilteredTodoState;
+class FilteredTodos {
+  final TodoFilter todoFilter;
+  final TodoSearch todoSearch;
+  final TodoList todoList;
   FilteredTodos({
-    required this.initialFilteredTodoState,
-  }) {
-    _state = FilteredTodosState(filteredTodos: initialFilteredTodoState);
-  }
+    required this.todoFilter,
+    required this.todoSearch,
+    required this.todoList,
+  });
 
-  FilteredTodosState get state => _state;
-
-  void update(
-    TodoFilter todoFilter,
-    TodoSearch todoSearch,
-    TodoList todoList,
-  ) {
+  FilteredTodosState get state {
     List<Todo> _filteredTodos;
 
     switch (todoFilter.state.filter) {
@@ -63,7 +56,6 @@ class FilteredTodos with ChangeNotifier {
       case Filter.all:
       default:
         _filteredTodos = todoList.state.todos;
-        break;
     }
 
     if (todoSearch.state.searchTerm.isNotEmpty) {
@@ -74,7 +66,6 @@ class FilteredTodos with ChangeNotifier {
           .toList();
     }
 
-    _state = _state.copyWith(filteredTodos: _filteredTodos);
-    notifyListeners();
+    return FilteredTodosState(filteredTodos: _filteredTodos);
   }
 }
